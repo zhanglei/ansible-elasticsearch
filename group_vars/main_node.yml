@@ -1,0 +1,53 @@
+# ---------------------------------- ElasticSearch 配置 -----------------------------------
+# 配置 elasticsearch 主目录
+elasticsearch_homepath: /usr/local/elasticsearch
+
+# 配置 elasticsearch 数据存储目录
+path_data: /usr/local/elasticsearch/data
+
+# Path to log files:
+# 配置 elasticsearch 日志存储目录设置索引数据的存储路径
+path_logs: /usr/local/elasticsearch/log
+
+# 线程池的大小
+## Suitable for ElasticSearch 6 and 7
+thread_pool_write_queue_size: 1000 
+
+# 配置集群名称
+## 默认是elasticsearch，es会自动发现在同一网段下的es，
+## 如果在同一网段下有多个集群，就可以用这个属性来区分不同的集群。
+## 确保不要在不同的环境中重复使用相同的集群名称，否则最终可能会导致节点加入了错误的集群.
+cluster_name: elasticsearch-test
+
+# 网卡绑定的 ip 地址
+## 默认情况下，Elasticsearch仅绑定到环回地址，
+## 例如127.0.0.1和[::1] 。这足以在服务器上运行单个开发节点。
+network_host: 0.0.0.0
+
+# 服务端口
+http_port: 9200
+
+# 
+transport_tcp_port: 9300
+
+# elasticsearch 6 only
+discovery_zen_ping_unicast_hosts: ["172.18.30.75:9300","172.18.30.76:9300","172.18.30.77:9300"]
+
+# master 节点的最小数量
+discovery_zen_minimum_master_nodes: 1
+
+# 开启跨域支持
+http_cors_enabled: "true"
+http_cors_allow_origin: "*"
+http_cors_allow_credentials: "true"
+
+# 启用自动创建系统索引
+action_auto_create_index: .monitoring*,.watches,.triggered_watches,.watcher-history*,.ml*
+
+# ---------------------------------- Kibana 配置 -----------------------------------
+# Kibana 服务端口
+server_port: 5601
+# Kibana 绑定网卡ip
+server_host: "0.0.0.0"
+# elasticsearch 的地址
+elasticsearch_hosts: ["http://172.18.30.75:9200"]

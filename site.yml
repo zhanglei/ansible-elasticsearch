@@ -1,0 +1,19 @@
+---
+- hosts: elasticsearch
+  pre_tasks:
+    - name: 导入变量 
+      include_vars: group_vars/main.yml
+  roles: 
+    - { role: init }
+    - { role: elasticsearch }
+
+- hosts: elasticsearch-head
+  roles:
+    - { role: elasticsearch-head }
+
+- hosts: kibana
+  pre_tasks:
+    - name: 导入变量 
+      include_vars: group_vars/main.yml
+  roles:
+    - { role: kibana }

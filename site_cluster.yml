@@ -1,0 +1,37 @@
+---
+- hosts: elasticsearch-master
+  vars:
+    # 是否是 master 节点
+    node_master: "true"
+    # 是否是 date 节点
+    node_data: "false"
+  pre_tasks:
+    - name: 导入变量 
+      include_vars: group_vars/main_master.yml
+  roles: 
+    - { role: init }
+    - { role: elasticsearch }
+
+- hosts: elasticsearch-node
+  vars:
+    # 是否是 master 节点
+    node_master: "false"
+    # 是否是 date 节点
+    node_data: "true"
+  pre_tasks:
+    - name: 导入变量 
+      include_vars: group_vars/main_node.yml
+  roles: 
+    - { role: init }
+    - { role: elasticsearch }
+
+- hosts: elasticsearch-head
+  roles:
+    - { role: elasticsearch-head }
+
+- hosts: kibana
+  pre_tasks:
+    - name: 导入变量 
+      include_vars: group_vars/main.yml
+  roles:
+    - { role: kibana }

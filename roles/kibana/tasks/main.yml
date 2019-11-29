@@ -1,0 +1,31 @@
+---
+
+- name: 复制 kibana 包到 /usr/local/
+  copy: 
+    src: kibana-7.4.2-x86_64.rpm
+    dest: /usr/local/kibana-7.4.2-x86_64.rpm
+
+- name: 安装 kibana
+  yum: 
+    name: /usr/local/kibana-7.4.2-x86_64.rpm
+    state: present
+
+- name: 配置 kibana
+  template:
+    src: kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+
+- name: 服务重载
+  systemd: 
+    daemon-reload: yes
+
+- name: 启动 && 开机启动 kibana
+  service:
+    name: kibana
+    state: started
+    enabled: yes
+
+# - name: 开机启动 kibana
+#   service:
+#     name: kibana
+#     enabled: yes

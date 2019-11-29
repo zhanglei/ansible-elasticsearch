@@ -1,0 +1,15 @@
+[all]
+node1 ansible_host=172.18.30.75 ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass=vagrant
+
+[elasticsearch]
+node1
+
+[elasticsearch-head]
+node1
+
+[kibana]
+node1
+
+[elasticsearch-cluster:children]
+elasticsearch
+kibana
